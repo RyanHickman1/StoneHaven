@@ -57,7 +57,7 @@ ${message}
     `.trim();
 
     const result = await resend.emails.send({
-      from: process.env.FROM_EMAIL || "Francesca <onboarding@resend.dev>",
+      from: process.env.FROM_EMAIL || "Francesca <send@francescaassistant.com>",
       to: ownerEmail,
       subject,
       text: emailBody
