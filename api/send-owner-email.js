@@ -13,22 +13,25 @@ export default async function handler(req, res) {
   if (!process.env.API_SECRET || token !== process.env.API_SECRET) {
     return res.status(401).json({ ok: false, error: "Unauthorized" });
   }
-  
+
   try {
     const {
       caller_name,
       caller_phone,
+      caller_email,
       message,
       intent,
       urgency
     } = req.body || {};
 
-    if (!caller_name || !caller_phone || !message || !intent || !urgency) {
+    if (!caller_phone || !caller_email || !message || !intent || !urgency) {
       return res.status(400).json({
         ok: false,
         error: "Missing required fields"
       });
     }
+
+    const finalName = caller_name || "Unknown";
 
     const ownerEmail = process.env.OWNER_EMAIL;
 
@@ -46,8 +49,9 @@ New call summary from Francesca:
 
 Business: Stone Haven
 
-Caller Name: ${caller_name}
+Caller Name: ${finalName}
 Caller Phone: ${caller_phone}
+Caller Email: ${caller_email}
 
 Intent: ${intent}
 Urgency: ${urgency}
